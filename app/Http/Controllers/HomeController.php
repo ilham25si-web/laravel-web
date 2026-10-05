@@ -31,13 +31,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-
-        $data['nama']       =$request->nama;
-        $data['email']      =$request->email;
-        $data['pertanyaan'] =$request->pertanyaan;
-
-        return view('home-question-respon', $data);
+        //
     }
 
     /**
