@@ -32,4 +32,5 @@ Route::get('/matakuliah', [MatakuliahController::class, 'index']);
 
 Route::get('/matakuliah/show/{kode?}', [MatakuliahController::class, 'show']);
 
-
+Route::post('question/store', [QuestionController::class, 'store'])
+		->name('question.store');
