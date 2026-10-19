@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Pelanggan;
+use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
@@ -30,17 +28,17 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $data['first_name'] = $request->first_name;
-		$data['last_name'] = $request->last_name;
-		$data['birthday'] = $request->birthday;
-		$data['gender'] = $request->gender;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
+        $data['last_name']  = $request->last_name;
+        $data['birthday']   = $request->birthday;
+        $data['gender']     = $request->gender;
+        $data['email']      = $request->email;
+        $data['phone']      = $request->phone;
 
-		Pelanggan::create($data);
+        Pelanggan::create($data);
 
-		return redirect()->route('pelanggan.index')->with('success','Penambahan Data Berhasil!');
+        return redirect()->route('pelanggan.index')->with('success', 'Penambahan Data Berhasil!');
     }
 
     /**
@@ -56,7 +54,8 @@ class PelangganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['dataPelanggan'] = Pelanggan::findOrFail($id);
+        return view('admin.pelanggan.edit', $data);
     }
 
     /**
@@ -64,7 +63,18 @@ class PelangganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dataPelanggan = Pelanggan::findOrFail($id);
+
+        $dataPelanggan->first_name = $request->first_name;
+        $dataPelanggan->last_name  = $request->last_name;
+        $dataPelanggan->birthday   = $request->birthday;
+        $dataPelanggan->gender     = $request->gender;
+        $dataPelanggan->email      = $request->email;
+        $dataPelanggan->phone      = $request->phone;
+
+        $dataPelanggan->save();
+
+        return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
     }
 
     /**
