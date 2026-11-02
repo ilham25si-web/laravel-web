@@ -20,7 +20,8 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        return view('admin.pelanggan.create');
+        $pelanggan = Pelanggan::all();
+        return view('admin.pelanggan.create', compact('pelanggan'));
     }
 
     /**
