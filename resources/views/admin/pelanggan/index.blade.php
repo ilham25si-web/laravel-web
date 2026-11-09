@@ -48,6 +48,10 @@
         </div>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card border-0 shadow mb-4">
@@ -57,10 +61,12 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <select name="gender" class="form-select" onchange="this.form.submit()">
-                                        <option value="">All</option>
+                                        <option value="">All Genders</option>
                                         <option value="Male" {{ request('gender') == 'Male' ? 'selected' : '' }}>Male
                                         </option>
                                         <option value="Female" {{ request('gender') == 'Female' ? 'selected' : '' }}>Female
+                                        </option>
+                                        <option value="Other" {{ request('gender') == 'Other' ? 'selected' : '' }}>Other
                                         </option>
                                     </select>
                                 </div>
@@ -76,16 +82,13 @@
                                                     clip-rule="evenodd"></path>
                                             </svg>
                                         </button>
-                                        <div class="col-md-3">
-
-                                            @if (request('search'))
-                                                <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
-                                                    class="btn btn-outline-secondary ml-3" id="clear-search"> Clear</a>
-                                            @endif
-
-                                        </div>
+                                        @if (request('search'))
+                                            <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
+                                                class="btn btn-outline-secondary" id="clear-search"> Clear</a>
+                                        @endif
                                     </div>
                                 </div>
+                            </div>
                         </form>
                         <table id="table-pelanggan" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light">

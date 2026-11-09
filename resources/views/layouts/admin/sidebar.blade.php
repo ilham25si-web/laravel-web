@@ -1,4 +1,4 @@
- <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
+<nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="../../index.html">
             <img class="navbar-brand-dark" src="{{ asset('assets-admin/img/brand/light.svg') }}" alt="Volt logo" /> <img
                 class="navbar-brand-light" src="{{ asset('') }}assets-admin/img/brand/dark.svg" alt="Volt logo" />
@@ -57,7 +57,7 @@
                         <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="nav-link">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
@@ -96,7 +96,7 @@
                                 </path>
                             </svg>
                         </span>
-                        <span class="sidebar-text">user</span>
+                        <span class="sidebar-text">User</span>
                     </a>
                 </li>
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
-
 {
     /**
      * Display a listing of the resource.
@@ -29,21 +29,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $data['first_name'] = $request->first_name;
-        $data['last_name']  = $request->last_name;
-        $data['birthday']   = $request->birthday;
-        $data['gender']     = $request->gender;
-        $data['email']      = $request->email;
-        $data['phone']      = $request->phone;
-        $data['password']   = Hash::make($request->password);
+        $validated = $request->validate([
+            'name'     => ['required', 'string', 'max:100'],
+            'email'    => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8', 'confirmed'],
+        ]);
+
+        $data['name']     = $validated['name'];
+        $data['email']    = $validated['email'];
+        $data['password'] = Hash::make($validated['password']);
 
         User::create($data);
 
@@ -74,12 +70,19 @@ class UserController extends Controller
     {
         $dataUser = User::findOrFail($id);
 
-        $dataUser->first_name = $request->first_name;
-        $dataUser->last_name  = $request->last_name;
-        $dataUser->birthday   = $request->birthday;
-        $dataUser->gender     = $request->gender;
-        $dataUser->email      = $request->email;
-        $dataUser->phone      = $request->phone;
+        $validated = $request->validate([
+            'name'     => ['required', 'string', 'max:100'],
+            'email'    => ['required', 'email', Rule::unique('users', 'email')->ignore($dataUser->id)],
+            'password' => ['nullable', 'min:8', 'confirmed'],
+        ]);
+
+        $dataUser->name  = $validated['name'];
+        $dataUser->email = $validated['email'];
+
+        // password hanya diganti kalau diisi
+        if (! empty($validated['password'])) {
+            $dataUser->password = Hash::make($validated['password']);
+        }
 
         $dataUser->save();
 
